@@ -1,24 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Profile Creation View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ProfileCreationViewController" customModule="Quizzes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1r9-Ja-GjH">
+                                <rect key="frame" x="0.0" y="70" width="375" height="173"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXy-me-e97">
+                                        <rect key="frame" x="113" y="27" width="135" height="127"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder-image" translatesAutoresizingMaskIntoConstraints="NO" id="UgN-d0-XzP">
+                                        <rect key="frame" x="113" y="24" width="133" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.79040025684931503" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="1r9-Ja-GjH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="GEe-OL-eFn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1r9-Ja-GjH" secondAttribute="bottom" constant="380" id="JCu-Ye-S7B"/>
+                            <constraint firstItem="1r9-Ja-GjH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="Otf-HR-QZX"/>
+                            <constraint firstItem="1r9-Ja-GjH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="e43-Bc-bTA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" image="quiz-icon" id="LEm-So-Yhh"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Iby-F1-PJn"/>
+                        <barButtonItem title="Item" image="icons8-search" id="2Wu-R1-flJ"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="NbY-2U-n7f"/>
+                        <barButtonItem title="Item" image="create-icon" id="cm0-As-NeL"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="BqB-ph-kIf"/>
+                        <barButtonItem title="Item" image="icons8-group_foreground_selected_filled" id="uMY-AT-mkh"/>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="profolioImageView" destination="UgN-d0-XzP" id="zPp-G3-ASF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="53.600000000000001" y="26.53673163418291"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="create-icon" width="37.5" height="37.5"/>
+        <image name="icons8-group_foreground_selected_filled" width="25" height="25"/>
+        <image name="icons8-search" width="25" height="25"/>
+        <image name="placeholder-image" width="512" height="512"/>
+        <image name="quiz-icon" width="37.5" height="37.5"/>
+    </resources>
 </document>
