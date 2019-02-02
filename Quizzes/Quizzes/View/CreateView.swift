@@ -12,7 +12,7 @@ class CreateView: UIView {
 
     lazy var myFirstTextField: UITextField = {
         var textField = UITextField()
-        textField.backgroundColor = .gray
+        textField.backgroundColor = .lightGray
         textField.placeholder = "enter text"
         textField.textAlignment = .center
 //        textField =  UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 40))
@@ -20,14 +20,14 @@ class CreateView: UIView {
     }()
     lazy var mySecondTextField: UITextField = {
         let textFieldTwo = UITextField()
-        textFieldTwo.backgroundColor = .gray
+        textFieldTwo.backgroundColor = .lightGray
         textFieldTwo.placeholder = "enter a text"
         textFieldTwo.textAlignment = .center
         return textFieldTwo
     }()
     lazy var myLastTextField: UITextField = {
         var lastTextField = UITextField()
-        lastTextField.backgroundColor = .gray
+        lastTextField.backgroundColor = .lightGray
         lastTextField.placeholder = "enter a text"
         lastTextField.textAlignment = .center
         return lastTextField
