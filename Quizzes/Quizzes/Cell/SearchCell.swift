@@ -10,11 +10,6 @@ import UIKit
 
 class SearchCell: UICollectionViewCell {
     
-//    lazy var myImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.backgroundColor = .white
-//        return imageView
-//    }()
     lazy var myButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "add-icon-filled"), for: .normal)
@@ -28,13 +23,14 @@ class SearchCell: UICollectionViewCell {
         var label = UILabel()
         label.text = "Label"
         label.numberOfLines = 3
+        label.textColor = .black
         label.font = UIFont(name: "Futura", size: 20)
         label.textAlignment = .center
         return label
     }()
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
-         self.backgroundColor = .white
+        self.backgroundColor = .white
         commonInit()
         setUpCellConstraints()
     }

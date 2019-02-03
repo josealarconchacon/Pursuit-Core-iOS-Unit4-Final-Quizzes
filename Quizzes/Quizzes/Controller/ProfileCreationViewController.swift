@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-
+var loggedIn = false
 
 class ProfileCreationViewController: UIViewController {
     var mainController: ProfileCreationViewController!
@@ -28,9 +28,16 @@ class ProfileCreationViewController: UIViewController {
         tapGesture.addTarget(self, action: #selector(imageTapped))
         profileView.userImage.addGestureRecognizer(tapGesture)
         profileView.userImage.isUserInteractionEnabled = true
-        profileAlert()
+//        profileAlert()
         
         }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if loggedIn == false {
+            profileAlert()
+        }
+    }
+    
     
     func profileAlert() {
         let alert = UIAlertController(title: "Enter username", message: "No spaces allowed or special characters", preferredStyle: .alert)
@@ -38,6 +45,9 @@ class ProfileCreationViewController: UIViewController {
         let submit = UIAlertAction(title: "Submit", style: .destructive, handler: { (action) -> Void in
             let textField = alert.textFields![0]
             print(textField.text)
+            if textField.text != "" {
+                loggedIn = true
+            }
             self.profileView.myLabel.text = textField.text!
         })
         alert.addTextField(configurationHandler: {(textField: UITextField) in

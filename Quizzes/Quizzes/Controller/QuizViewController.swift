@@ -50,7 +50,9 @@ extension QuizViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizCell", for: indexPath) as? QuizCell else {
             return UICollectionViewCell()}
-        let selectedQuiz = addQuiz[indexPath.row]
+//        let selectedQuiz = addQuiz[indexPath.row]
+        let selectedQuiz = favoriteQuizzes[indexPath.row]
+        cell.myLabel.text = selectedQuiz.quizTitle
         cell.myButton.tag = indexPath.row
         cell.myButton.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
         return cell

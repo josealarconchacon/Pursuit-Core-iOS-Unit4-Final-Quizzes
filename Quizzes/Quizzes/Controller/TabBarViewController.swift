@@ -16,7 +16,7 @@ class TabBarViewController: UITabBarController {
     var createViewController = UINavigationController.init(rootViewController: CreateViewController())
     override func viewDidLoad() {
         super.viewDidLoad()
-        setViewControllers([mainViewController, searchViewController, quizViewController, createViewController ], animated: true)
+        setViewControllers([quizViewController, searchViewController, createViewController,mainViewController ], animated: true)
         searchViewController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "icons8-search"), tag: 0)
         quizViewController.tabBarItem = UITabBarItem(title: "Quiz", image: UIImage(named: "icons8-ask_question"), tag: 0)
         createViewController.tabBarItem = UITabBarItem(title: "Create", image: UIImage(named: "icons8-create_new"), tag: 0)

@@ -13,7 +13,7 @@ class SearchQuizView: UIView {
     
     lazy var myCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize.init(width: 200, height: 250)
+        layout.itemSize = CGSize.init(width: 400, height: 400)
         layout.sectionInset = UIEdgeInsets.init(top: 20, left: 10, bottom: 20, right: 10)
         let collectionView = UICollectionView.init(frame: self.bounds, collectionViewLayout: layout)
         collectionView.backgroundColor = .gray
@@ -38,9 +38,9 @@ class SearchQuizView: UIView {
     }
     func setCollectionViewConstraints() {
         myCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        myCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        myCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        myCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        myCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        myCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+        myCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 1).isActive = true
+        myCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -1).isActive = true
+        myCollectionView.heightAnchor.constraint(equalTo: heightAnchor, constant: 20).isActive = true
     }
 }

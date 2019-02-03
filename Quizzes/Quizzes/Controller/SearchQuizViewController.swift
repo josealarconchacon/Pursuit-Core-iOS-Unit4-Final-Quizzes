@@ -7,11 +7,12 @@
 //
 
 import UIKit
+var favoriteQuizzes = [QuizModel]()
 
 class SearchQuizViewController: UIViewController {
-    let searchView = SearchQuizView()
+    var searchView = SearchQuizView()
     let searchCell = SearchCell()
-    var addQuiz = [String]()
+    var allQuiz = [String]()
     
     var quizData = [QuizModel]() {
         didSet {
@@ -22,34 +23,33 @@ class SearchQuizViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray
+        view.backgroundColor = .white
         navigationItem.title = "Search For Quizzes"
         view.addSubview(searchView)
-        view.addSubview(searchCell)
         searchView.myCollectionView.delegate = self
         searchView.myCollectionView.dataSource = self
-        dump(quizData)
+//        dump(quizData)
         
-    }
-    @objc func addWasPressed(sender: UIButton) {
-        if let userName = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
-            let index = sender.tag
-            let quizToSave = quizData[index]
-            var ids = [String]()
-            let quizzesSaved = DataPersistenceQuizzes.getQuiz(name: userName)
-            for quiz in quizzesSaved {
-                ids.append(quiz.id)
+        APIClient.quizzes { (appError, quiz) in
+            if let appError = appError {
+                print(appError)
             }
-            if ids.contains(quizToSave.id){
-                let alert = UIAlertController(title: "Quiz already saved", message: "Please choose another one", preferredStyle: .alert)
-                let okay = UIAlertAction(title: "Okay", style: .default) { (UIAlertAction) in
-                    self.dismiss(animated: true, completion: nil)
-                    
-                }
-                alert.addAction(okay)
-                present(alert, animated: true, completion: nil)
+            if let quiz = quiz {
+                self.quizData = quiz
+                print(self.quizData)
+                print("the number of quizes is \(self.quizData.count)")
+                self.searchView.myCollectionView.reloadData()
             }
         }
+    }
+    @objc func addToQuiz(sender: UIButton) {
+        let alertController = UIAlertController(title: nil, message: "Was add it to the Quiz", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
+        }
+        alertController.addAction(action)
+        favoriteQuizzes.append(quizData[sender.tag])
+        print(favoriteQuizzes)
+        present(alertController,animated: true,completion: nil)
     }
 }
 extension SearchQuizViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -60,10 +60,13 @@ extension SearchQuizViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCell", for: indexPath) as? SearchCell else {
             return UICollectionViewCell()}
-        let addQuiz = quizData[indexPath.row]
-        cell.label.text = addQuiz.quizTitle
+//        let addQuiz = quizData[indexPath.row]
+        cell.layer.cornerRadius = 30
+        cell.layer.masksToBounds = true
+        let selectedQuiz = quizData[indexPath.row]
+        cell.label.text = selectedQuiz.quizTitle
         cell.myButton.tag = indexPath.row
-        cell.myButton.addTarget(self, action: #selector(addWasPressed), for: .touchUpInside)
+        cell.myButton.addTarget(self, action: #selector(addToQuiz(sender:)), for: .touchUpInside)
         return cell
     }
 }
