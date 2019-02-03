@@ -10,13 +10,13 @@ import UIKit
 
 class QuizViewController: UIViewController {
 
-    let searchQuiz = QuizView()
+    let quizView = QuizView()
     let quizCell = QuizCell()
     
     var addQuiz = [AddQuiz]() {
         didSet {
             DispatchQueue.main.async {
-                self.searchQuiz.myCollectionView.reloadData()
+                self.quizView.myCollectionView.reloadData()
                 if self.addQuiz.count == 0 {
                     
                 }
@@ -27,13 +27,22 @@ class QuizViewController: UIViewController {
         super.viewDidLoad()
          title = "My Quizzes"
         view.backgroundColor = .white
+        view.addSubview(quizView)
         tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-        searchQuiz.myCollectionView.dataSource = self
-        searchQuiz.myCollectionView.delegate = self
-        searchQuiz.myCollectionView.register(QuizCell.self, forCellWithReuseIdentifier: "QuizCell")
-        view.addSubview(searchQuiz)
-        view.addSubview(quizCell)
+        quizView.myCollectionView.dataSource = self
+        quizView.myCollectionView.delegate = self
+        quizView.myCollectionView.register(QuizCell.self, forCellWithReuseIdentifier: "QuizCell")
+        
+        
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("the favorite quizes are: ")
+        print(favoriteQuizzes)
+        print("there are \(favoriteQuizzes.count) favorite quizes")
+        quizView.myCollectionView.reloadData()
+    }
+    
     @objc func buttonPress(sender: UIButton) {
         let index = sender.tag
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -45,16 +54,23 @@ class QuizViewController: UIViewController {
 
 extension QuizViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return addQuiz.count
+        return favoriteQuizzes.count
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize.init(width:200, height:300)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedQuiz = favoriteQuizzes[indexPath.row]
+//        let detailVC = DetailQuizViewController.init(nibName: selectedQuiz.facts, bundle: selectedQuiz.quizTitle)
+//        navigationController?.pushViewController(detailVC, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizCell", for: indexPath) as? QuizCell else {
             return UICollectionViewCell()}
-//        let selectedQuiz = addQuiz[indexPath.row]
         let selectedQuiz = favoriteQuizzes[indexPath.row]
         cell.myLabel.text = selectedQuiz.quizTitle
-        cell.myButton.tag = indexPath.row
-        cell.myButton.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
+        cell.quizButtonCell.tag = indexPath.row
+        cell.quizButtonCell.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
         return cell
     }
 }

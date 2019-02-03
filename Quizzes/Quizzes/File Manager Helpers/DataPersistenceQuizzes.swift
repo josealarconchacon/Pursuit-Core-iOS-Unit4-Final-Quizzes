@@ -11,6 +11,7 @@ import Foundation
 final class DataPersistenceQuizzes {
     private static let name = "Quizzes.plist"
     private static var quiz = [QuizModel]()
+    private static var quizToAdd = [AddQuiz]()
     private init() {}
 
     
@@ -43,10 +44,10 @@ static func getQuiz(name: String) -> [QuizModel] {
     return quiz
 }
 static func delet(index: Int) {
-
+    quizToAdd.remove(at: index)
         }
-static func save() {
-
+    static func save(name: String, getQuiz: AddQuiz) {
+        quizToAdd.append(getQuiz)
     }
 }
 

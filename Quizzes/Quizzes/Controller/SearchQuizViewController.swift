@@ -20,7 +20,6 @@ class SearchQuizViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -28,7 +27,7 @@ class SearchQuizViewController: UIViewController {
         view.addSubview(searchView)
         searchView.myCollectionView.delegate = self
         searchView.myCollectionView.dataSource = self
-//        dump(quizData)
+        //        dump(quizData)
         
         APIClient.quizzes { (appError, quiz) in
             if let appError = appError {
@@ -45,6 +44,13 @@ class SearchQuizViewController: UIViewController {
     @objc func addToQuiz(sender: UIButton) {
         let alertController = UIAlertController(title: nil, message: "Was add it to the Quiz", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
+            if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
+            let index = sender.tag ; let quizToSave = self.quizData[index]
+                let saveQuiz = DataPersistenceQuizzes.getQuiz(name: name)
+            for item in saveQuiz {
+                self.allQuiz.append(item.id)
+                }
+            }
         }
         alertController.addAction(action)
         favoriteQuizzes.append(quizData[sender.tag])
@@ -52,6 +58,7 @@ class SearchQuizViewController: UIViewController {
         present(alertController,animated: true,completion: nil)
     }
 }
+
 extension SearchQuizViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return quizData.count
@@ -60,7 +67,6 @@ extension SearchQuizViewController: UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchCell", for: indexPath) as? SearchCell else {
             return UICollectionViewCell()}
-//        let addQuiz = quizData[indexPath.row]
         cell.layer.cornerRadius = 30
         cell.layer.masksToBounds = true
         let selectedQuiz = quizData[indexPath.row]
@@ -70,4 +76,3 @@ extension SearchQuizViewController: UICollectionViewDataSource, UICollectionView
         return cell
     }
 }
-

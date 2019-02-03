@@ -10,7 +10,7 @@ import UIKit
 
 class QuizCell: UICollectionViewCell {
 
-    lazy var myButton: UIButton = {
+    lazy var quizButtonCell: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icons8-button2"), for: .normal)
         button.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
@@ -20,9 +20,10 @@ class QuizCell: UICollectionViewCell {
     @objc func buttonPress() {
     }
     lazy var myLabel: UILabel = {
-        let label = UILabel()
+        var label = UILabel()
         label.textColor = .black
         label.numberOfLines = 3
+        label.font = UIFont(name: "Futura", size: 20)
         label.textAlignment = .center
         label.text = "Hello"
         return label
@@ -40,15 +41,15 @@ class QuizCell: UICollectionViewCell {
         setUpConstraints()
     }
     private func setUpConstraints() {
-        addSubview(myButton)
+        addSubview(quizButtonCell)
         addSubview(myLabel)
         setConstraints()
     }
     func setConstraints() {
-        myButton.translatesAutoresizingMaskIntoConstraints = false
-        myButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
-        myButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5).isActive = true
-        myButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        quizButtonCell.translatesAutoresizingMaskIntoConstraints = false
+        quizButtonCell.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 5).isActive = true
+        quizButtonCell.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5).isActive = true
+        quizButtonCell.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         myLabel.translatesAutoresizingMaskIntoConstraints = false
         myLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

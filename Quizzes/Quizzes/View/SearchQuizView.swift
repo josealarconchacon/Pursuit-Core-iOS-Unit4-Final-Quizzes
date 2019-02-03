@@ -38,7 +38,7 @@ class SearchQuizView: UIView {
     }
     func setCollectionViewConstraints() {
         myCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        myCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+        myCollectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
         myCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 1).isActive = true
         myCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -1).isActive = true
         myCollectionView.heightAnchor.constraint(equalTo: heightAnchor, constant: 20).isActive = true
