@@ -9,14 +9,14 @@
 import UIKit
 
 class QuizDetailView: UIView {
+    let detail = DetailQuizCollectionViewCell()
     
-    var detail = DetailQuizCollectionViewCell()
     var detailQuizView = DetailQuizCollectionViewCell()
     lazy var detailCView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize.init(width: 350, height: 500)
         layout.sectionInset = UIEdgeInsets.init(top: 20, left: 10, bottom: 20, right: 10)
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         var collectionView = UICollectionView.init(frame: self.bounds, collectionViewLayout: layout)
         collectionView.backgroundColor = .red
         return collectionView

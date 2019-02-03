@@ -17,9 +17,6 @@ class QuizViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.quizView.myCollectionView.reloadData()
-                if self.addQuiz.count == 0 {
-                    
-                }
             }
         }
     }
@@ -32,8 +29,6 @@ class QuizViewController: UIViewController {
         quizView.myCollectionView.dataSource = self
         quizView.myCollectionView.delegate = self
         quizView.myCollectionView.register(QuizCell.self, forCellWithReuseIdentifier: "QuizCell")
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,10 +39,17 @@ class QuizViewController: UIViewController {
     }
     
     @objc func buttonPress(sender: UIButton) {
-        let index = sender.tag
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let delete = UIAlertAction(title: "Delete", style: .destructive) { (UIAlertAction) in
-            DataPersistenceQuizzes.delet(index: index)
+        if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
+            let index = sender.tag
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let delete = UIAlertAction(title: "Delete", style: .destructive) { (UIAlertAction) in
+                DataPersistenceQuizzes.delet(index: index)
+                _ = DataPersistenceQuizzes.getQuiz(name: name)
+            }
+             let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+            alert.addAction(delete)
+            alert.addAction(cancel)
+            present(alert, animated: true)
         }
     }
 }
@@ -61,8 +63,8 @@ extension QuizViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedQuiz = favoriteQuizzes[indexPath.row]
-//        let detailVC = DetailQuizViewController.init(nibName: selectedQuiz.facts, bundle: selectedQuiz.quizTitle)
-//        navigationController?.pushViewController(detailVC, animated: true)
+        let detailViewController = DetailQuizViewController.init(titleInfo: selectedQuiz.quizTitle , facts: selectedQuiz.facts)
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizCell", for: indexPath) as? QuizCell else {
@@ -74,3 +76,4 @@ extension QuizViewController: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
 }
+

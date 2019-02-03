@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 var favoriteQuizzes = [QuizModel]()
 
 class SearchQuizViewController: UIViewController {
@@ -19,7 +20,6 @@ class SearchQuizViewController: UIViewController {
             self.searchView.myCollectionView.reloadData()
         }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -27,7 +27,6 @@ class SearchQuizViewController: UIViewController {
         view.addSubview(searchView)
         searchView.myCollectionView.delegate = self
         searchView.myCollectionView.dataSource = self
-        //        dump(quizData)
         
         APIClient.quizzes { (appError, quiz) in
             if let appError = appError {
@@ -37,6 +36,7 @@ class SearchQuizViewController: UIViewController {
                 self.quizData = quiz
                 print(self.quizData)
                 print("the number of quizes is \(self.quizData.count)")
+                self.quizData.sorted{$0.quizTitle < $1.quizTitle }
                 self.searchView.myCollectionView.reloadData()
             }
         }

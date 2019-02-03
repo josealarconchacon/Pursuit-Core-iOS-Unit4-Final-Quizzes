@@ -14,7 +14,7 @@ class DetailQuizCollectionViewCell: UICollectionViewCell {
         var label = UILabel()
         label.text = "Hello"
         label.textColor = .black
-        label.font = UIFont(name: "Futura", size: 25)
+//        label.font = UIFont(name: "Futura", size: 25)
         label.numberOfLines = 10
         return label
     }()

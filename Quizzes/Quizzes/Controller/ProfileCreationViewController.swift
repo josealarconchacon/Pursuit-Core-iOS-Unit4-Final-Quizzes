@@ -31,14 +31,11 @@ class ProfileCreationViewController: UIViewController {
 //        profileAlert()
         
         }
-    
     override func viewDidAppear(_ animated: Bool) {
         if loggedIn == false {
             profileAlert()
         }
     }
-    
-    
     func profileAlert() {
         let alert = UIAlertController(title: "Enter username", message: "No spaces allowed or special characters", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in })
