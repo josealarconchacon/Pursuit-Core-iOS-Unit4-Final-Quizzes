@@ -28,6 +28,13 @@ class ProfileCreationViewController: UIViewController {
         tapGesture.addTarget(self, action: #selector(imageTapped))
         profileView.userImage.addGestureRecognizer(tapGesture)
         profileView.userImage.isUserInteractionEnabled = true
+        
+        profileView.userImage.layer.borderWidth = 1
+        profileView.userImage.layer.masksToBounds = false
+        profileView.userImage.layer.borderColor = UIColor.black.cgColor
+        profileView.userImage.layer.cornerRadius = profileView.userImage.frame.height/2
+        profileView.clipsToBounds = true
+        
 //        profileAlert()
         
         }

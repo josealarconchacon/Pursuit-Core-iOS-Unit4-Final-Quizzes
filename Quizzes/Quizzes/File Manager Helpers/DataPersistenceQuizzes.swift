@@ -45,7 +45,7 @@ static func getQuiz(name: String) -> [QuizModel] {
 }
 static func delet(index: Int) {
     quizToAdd.remove(at: index)
-        }
+    }
     static func save(name: String, getQuiz: AddQuiz) {
         quizToAdd.append(getQuiz)
     }

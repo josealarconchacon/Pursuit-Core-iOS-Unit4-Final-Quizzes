@@ -15,22 +15,21 @@ class CreateView: UIView {
         textField.backgroundColor = .lightGray
         textField.placeholder = "enter text"
         textField.textAlignment = .center
-//        textField =  UITextField(frame: CGRect(x: 20, y: 100, width: 300, height: 40))
         return textField
     }()
-    lazy var mySecondTextField: UITextField = {
-        let textFieldTwo = UITextField()
-        textFieldTwo.backgroundColor = .lightGray
-        textFieldTwo.placeholder = "enter a text"
-        textFieldTwo.textAlignment = .center
-        return textFieldTwo
+    lazy var mySecondTextView: UITextView = {
+        let textViewTwo = UITextView()
+        textViewTwo.backgroundColor = .lightGray
+        textViewTwo.text = "enter a text"
+        textViewTwo.textAlignment = .center
+        return textViewTwo
     }()
-    lazy var myLastTextField: UITextField = {
-        var lastTextField = UITextField()
-        lastTextField.backgroundColor = .lightGray
-        lastTextField.placeholder = "enter a text"
-        lastTextField.textAlignment = .center
-        return lastTextField
+    lazy var myLastTexView: UITextView = {
+        var lastTextView = UITextView()
+        lastTextView.backgroundColor = .lightGray
+        lastTextView.text = "enter a text"
+        lastTextView.textAlignment = .center
+        return lastTextView
     }()
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -45,8 +44,8 @@ class CreateView: UIView {
     }
     private func setUpConstraints() {
         addSubview(myFirstTextField)
-        addSubview(mySecondTextField)
-        addSubview(myLastTextField)
+        addSubview(mySecondTextView)
+        addSubview(myLastTexView)
         setCreateTextFieldConstraints()
     }
     func setCreateTextFieldConstraints() {
@@ -58,20 +57,20 @@ class CreateView: UIView {
         myFirstTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         myFirstTextField.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        mySecondTextField.translatesAutoresizingMaskIntoConstraints = false
-        mySecondTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant:60).isActive = true
-        mySecondTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 11).isActive = true
-        mySecondTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -11).isActive = true
-        mySecondTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        mySecondTextField.heightAnchor.constraint(equalToConstant: 140).isActive = true
-        mySecondTextField.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        mySecondTextView.translatesAutoresizingMaskIntoConstraints = false
+        mySecondTextView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant:60).isActive = true
+        mySecondTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 11).isActive = true
+        mySecondTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -11).isActive = true
+        mySecondTextView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        mySecondTextView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        mySecondTextView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        myLastTextField.translatesAutoresizingMaskIntoConstraints = false
-        myLastTextField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant:210).isActive = true
-        myLastTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 11).isActive = true
-        myLastTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -11).isActive = true
-        myLastTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        myLastTextField.heightAnchor.constraint(equalToConstant: 140).isActive = true
-        myLastTextField.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        myLastTexView.translatesAutoresizingMaskIntoConstraints = false
+        myLastTexView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant:210).isActive = true
+        myLastTexView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 11).isActive = true
+        myLastTexView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -11).isActive = true
+        myLastTexView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        myLastTexView.heightAnchor.constraint(equalToConstant: 140).isActive = true
+        myLastTexView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class QuizViewController: UIViewController {
-
+    
     let quizView = QuizView()
     let quizCell = QuizCell()
     
@@ -39,19 +39,19 @@ class QuizViewController: UIViewController {
     }
     
     @objc func buttonPress(sender: UIButton) {
-        if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
+//        if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
             let index = sender.tag
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let delete = UIAlertAction(title: "Delete", style: .destructive) { (UIAlertAction) in
-                DataPersistenceQuizzes.delet(index: index)
-                _ = DataPersistenceQuizzes.getQuiz(name: name)
+               DataPersistenceQuizzes.delet(index: index)
+                self.quizView.myCollectionView.reloadData()
             }
              let cancel = UIAlertAction(title: "Cancel", style: .cancel)
             alert.addAction(delete)
             alert.addAction(cancel)
             present(alert, animated: true)
         }
-    }
+   // }
 }
 
 extension QuizViewController: UICollectionViewDataSource, UICollectionViewDelegate {
