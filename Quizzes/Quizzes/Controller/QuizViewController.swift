@@ -13,24 +13,46 @@ class QuizViewController: UIViewController {
     let searchQuiz = QuizView()
     let quizCell = QuizCell()
     
+    var addQuiz = [AddQuiz]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.searchQuiz.myCollectionView.reloadData()
+                if self.addQuiz.count == 0 {
+                    
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+         title = "My Quizzes"
         view.backgroundColor = .white
+        tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
+        searchQuiz.myCollectionView.dataSource = self
+        searchQuiz.myCollectionView.delegate = self
+        searchQuiz.myCollectionView.register(QuizCell.self, forCellWithReuseIdentifier: "QuizCell")
         view.addSubview(searchQuiz)
         view.addSubview(quizCell)
-        profileAlert()
     }
-    func profileAlert() {
-        let alert = UIAlertController(title: "Default Search", message: "Enter username&password", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in })
-        let submit = UIAlertAction(title: "Submit", style: .destructive, handler: { (action) -> Void in })
-        
-        alert.addTextField(configurationHandler: {(textField: UITextField) in
-            textField.placeholder = "Enter user name"
-            textField.keyboardType = .default
-        })
-        alert.addAction(cancel)
-        alert.addAction(submit)
-        present(alert, animated:  true, completion:  nil)
+    @objc func buttonPress(sender: UIButton) {
+        let index = sender.tag
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let delete = UIAlertAction(title: "Delete", style: .destructive) { (UIAlertAction) in
+            DataPersistenceQuizzes.delet(index: index)
+        }
+    }
+}
+
+extension QuizViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return addQuiz.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizCell", for: indexPath) as? QuizCell else {
+            return UICollectionViewCell()}
+        let selectedQuiz = addQuiz[indexPath.row]
+        cell.myButton.tag = indexPath.row
+        cell.myButton.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
+        return cell
     }
 }

@@ -13,26 +13,33 @@ import AVFoundation
 class ProfileCreationViewController: UIViewController {
     var mainController: ProfileCreationViewController!
    
+    var userName = String()
     var profileView = PorfileView()
-    var selectedProfileimage: UIImage!
+    var selectedProfileimage = UIImage()
     private var imagePickerController: UIImagePickerController!
+    let tapGesture = UITapGestureRecognizer()
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.title = "Profile"
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         view.addSubview(profileView)
+        tapGesture.addTarget(self, action: #selector(imageTapped))
+        profileView.userImage.addGestureRecognizer(tapGesture)
+        profileView.userImage.isUserInteractionEnabled = true
         profileAlert()
-        y()
-    }
+        
+        }
+    
     func profileAlert() {
-        let alert = UIAlertController(title: "Default Search", message: "Enter username&password", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Enter username", message: "No spaces allowed or special characters", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in })
-        let submit = UIAlertAction(title: "Submit", style: .destructive, handler: { (action) -> Void in })
-
+        let submit = UIAlertAction(title: "Submit", style: .destructive, handler: { (action) -> Void in
+            let textField = alert.textFields![0]
+            print(textField.text)
+            self.profileView.myLabel.text = textField.text!
+        })
         alert.addTextField(configurationHandler: {(textField: UITextField) in
             textField.placeholder = "Enter user name"
             textField.keyboardType = .default
@@ -41,27 +48,35 @@ class ProfileCreationViewController: UIViewController {
         alert.addAction(submit)
         present(alert, animated:  true, completion:  nil)
     }
-    func y() {
-        let image = UIImageView()
-        
-        var myActionSheet =  UIAlertController(title: "Delete all data ?", message: "You may not be able to recover this back", preferredStyle: UIAlertController.Style.actionSheet)
-        myActionSheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
-        myActionSheet.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.default, handler: { (ACTION :UIAlertAction!)in
+   
+    @objc func imageTapped() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in })
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
+        imagePickerController.sourceType = .photoLibrary
         }))
-        myActionSheet.addAction(UIAlertAction(title: "Delete Permanently", style: UIAlertAction.Style.destructive, handler: { (ACTION :UIAlertAction!)in
-        }))
-        self.present(myActionSheet, animated: true, completion: nil)
-        
+        actionSheet.addAction(cancel)
+        print(actionSheet)
+        self.present(imagePickerController, animated:  true, completion:  nil)
+        print("tapped")
     }
 }
 
 extension ProfileCreationViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            // code 
+         profileView.userImage.image = image
+        let imageToSave = image.jpegData(compressionQuality: 0.5)
+            if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
+            UserDefaults.standard.set(imageToSave, forKey: "name" + name)
+            }
+            picker.dismiss(animated: true, completion: nil)
         }
     }
 }
+

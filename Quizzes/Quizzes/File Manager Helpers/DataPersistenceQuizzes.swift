@@ -9,44 +9,45 @@
 import Foundation
 
 final class DataPersistenceQuizzes {
-    private static let filename = "Quizzes.plist"
-    private static var quiz = [QuizModelData]()
+    private static let name = "Quizzes.plist"
+    private static var quiz = [QuizModel]()
     private init() {}
 
     
-    static func saveToDocumentsDirectory()-> [QuizModelData] {
-        let path = DataPersistenceManager.filepathToDocumentsDiretory(filename: filename)
+static func quizToSave(name: String) {
+    let path = DataPersistenceManager.filepathToDocumentsDiretory(filename: name)
         do {
             let data = try PropertyListEncoder().encode(quiz)
             try data.write(to: path, options:  Data.WritingOptions.atomic)
         } catch {
             print("Property list encoding error: \(error)")
         }
-        return quiz
     }
-    static func fetchQuizFromDocumentsDirectory() -> [QuizModelData] {
-        var quiz = [QuizModelData]()
-        let path = DataPersistenceManager.filepathToDocumentsDiretory(filename: filename).path
+static func getQuiz(name: String) -> [QuizModel] {
+    var quiz = [QuizModel]()
+        let path = DataPersistenceManager.filepathToDocumentsDiretory(filename: name).path
         if FileManager.default.fileExists(atPath: path) {
             if let data = FileManager.default.contents(atPath: path) {
                 do {
-                    quiz = try PropertyListDecoder().decode([QuizModelData].self, from: data)
+                    quiz = try PropertyListDecoder().decode([QuizModel].self, from: data)
+                    //quizzes = quizzes.sorted{$0.date < $1.date}
                 } catch {
                     print("property list decoding error: \(error)")
                 }
             } else {
                 print("data is nil")
-            }
-        } else {
-            print("\(filename) does not exist")
         }
-        return quiz
+    } else {
+        print("\(name) does not exist")
+    }
+    return quiz
+}
+static func delet(index: Int) {
+
         }
-    static func deletPost(index: Int) {
-        
-        }
-    static func save() {
-        
+static func save() {
+
     }
 }
+
 

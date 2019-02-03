@@ -7,7 +7,19 @@
 //
 
 import Foundation
+import UIKit
 
 struct UserDefaultKeys {
-    static let defaultSearchKey = "Default Search"
-}
+    static var defaultSearchKey = "name"
+    static var defaultKey = "image"
+    static func getUserImage() -> UIImage {
+        var getImage = UIImage()
+            if let name  = UserDefaults.standard.string(forKey: UserDefaultKeys.defaultSearchKey) as? String {
+                if let image = UserDefaults.standard.string(forKey: UserDefaultKeys.defaultKey) as? Data {
+                    let userImage = UIImage(data: image)
+                        getImage = userImage!
+                }
+            }
+            return getImage
+        }
+    }

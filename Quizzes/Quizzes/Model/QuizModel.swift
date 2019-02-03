@@ -7,11 +7,21 @@
 //
 
 import Foundation
-struct QuizModelData: Codable {
-    let quiz: [QuizModel]
-}
+
+
 struct QuizModel: Codable {
     let id: String
     let quizTitle: String
     let facts: [String]
+}
+struct AddQuiz: Codable {
+    let id: String
+    let quizTitle: String
+    let facts: [String]
+    let createdAt: String
+    
+    public var date: Date {
+        let date = createdAt.date()
+        return date
+    }
 }

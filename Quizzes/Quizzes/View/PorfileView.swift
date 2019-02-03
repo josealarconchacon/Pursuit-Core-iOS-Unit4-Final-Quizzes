@@ -16,8 +16,8 @@ class PorfileView: UIView {
         return view
     }()
     lazy var userImage: UIImageView = {
-        var image = UIImageView(image: UIImage(named: "placeholder-image"))
-//        image.backgroundColor = .black
+        let image = UIImageView()
+        image.backgroundColor = .black
         return image
     }()
     lazy var myLabel: UILabel = {
@@ -46,6 +46,10 @@ class PorfileView: UIView {
         addSubview(myLabel)
         setUConstraints()
     }
+    func tapViewTheSecond(){
+        print("tapped the damn thing")
+    }
+    
     func setUConstraints() {
         userImage.translatesAutoresizingMaskIntoConstraints = false
         userImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 60).isActive = true
