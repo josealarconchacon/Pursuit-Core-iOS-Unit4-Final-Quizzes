@@ -29,16 +29,26 @@ class CreateViewController: UIViewController {
         if loggedIn == false {
             createQuizLoginAlert()
         }
+        if loggedIn == true {
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+        }
     }
     func createQuizLoginAlert() {
-        let alert = UIAlertController(title: nil, message: "You need to Logged In", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "You need to be logged in to create a quiz", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
             self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         alert.addAction(ok)
         self.present(alert,animated: true,completion: nil)
     }
-   
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "enter quiz fact" {
+            textView.text = ""
+            textView.textColor = UIColor.black
+            textView.font = UIFont(name: "verdana", size: 18.0)
+        }
+    }
+
     @objc func cancel(_ sender: UIBarButtonItem) {
         tabBarController?.selectedIndex = 0
         print("cancel button \(cancel)")
@@ -48,29 +58,24 @@ class CreateViewController: UIViewController {
             print("Please include a Quiz name and two facts")
             return
         }
-//        let factsDetail = [createView.myLastTextView, createView.mySecondTextView, createView.myLastTextView]
-//        let timeStamp = Date.getISOTimestamp()
         
         let newQuizName = createView.myFirstTextField.text
         let newQuizFactOne = createView.mySecondTextView.text
         let newQuizFactTwo = createView.myLastTextView.text
+        let newQuizId = String(favoriteQuizzes.count + 1)
         
-        let newQuiz = QuizModel.init(id: "some ID", quizTitle: newQuizName!, facts: [newQuizFactOne!, newQuizFactTwo!])
+        let newQuiz = QuizModel.init(id: newQuizId, quizTitle: newQuizName!, facts: [newQuizFactOne!, newQuizFactTwo!])
         
         favoriteQuizzes.append(newQuiz)
-//        createView.myFirstTextField = createView.myFirstTextField.text
-//        createView.mySecondTextView = createView.mySecondTextView
-//        createView.myLastTextView = createView.myLastTextView
-        UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String;  do {
+        
            let alert = UIAlertController(title: "Quiz Saved", message: nil, preferredStyle: .alert)
             let ok = UIAlertAction(title: "Ok", style: .default) { (UIAlertAction) in
                 self.dismiss(animated: true, completion: nil)
             }
             alert.addAction(ok)
-            present(alert, animated: true, completion: nil)
-        }
+            self.present(alert, animated: true, completion: nil)
+        
     }
-    
 }
 extension CreateViewController: UITextViewDelegate, UITextFieldDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

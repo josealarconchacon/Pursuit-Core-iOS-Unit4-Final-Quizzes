@@ -36,13 +36,13 @@ class SearchQuizViewController: UIViewController {
                 self.quizData = quiz
                 print(self.quizData)
                 print("the number of quizes is \(self.quizData.count)")
-                self.quizData.sorted{$0.quizTitle < $1.quizTitle }
+                self.quizData = self.quizData.sorted{$0.quizTitle < $1.quizTitle }
                 self.searchView.myCollectionView.reloadData()
             }
         }
     }
     @objc func addToQuiz(sender: UIButton) {
-        let alertController = UIAlertController(title: nil, message: "Was add it to the Quiz", preferredStyle: .alert)
+        var alertController = UIAlertController(title: nil, message: "The quiz is already in the list", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
             
             if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
@@ -54,7 +54,11 @@ class SearchQuizViewController: UIViewController {
             }
         }
         alertController.addAction(action)
-        favoriteQuizzes.append(quizData[sender.tag])
+        if favoriteQuizzes.contains(quizData[sender.tag]) != true {
+            alertController.message = "The quiz was added"
+            favoriteQuizzes.append(quizData[sender.tag])
+        }
+        
         print(favoriteQuizzes)
         present(alertController,animated: true,completion: nil)
     }

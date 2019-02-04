@@ -29,9 +29,26 @@ class QuizViewController: UIViewController {
         quizView.myCollectionView.dataSource = self
         quizView.myCollectionView.delegate = self
         quizView.myCollectionView.register(QuizCell.self, forCellWithReuseIdentifier: "QuizCell")
+        
+        if favoriteQuizzes.count == 0 {
+            quizView.noQuizLabel.isHidden = false
+            quizView.myCollectionView.isHidden = true
+            quizView.noQuizLabel.text = "There are no quizzes. Please add one from the search tab, or create a new one."
+        } else {
+            quizView.noQuizLabel.isHidden = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if favoriteQuizzes.count == 0 {
+            quizView.noQuizLabel.isHidden = false
+            quizView.myCollectionView.isHidden = true
+            quizView.noQuizLabel.text = "There are no quizzes. Please add one from the search tab, or create a new one."
+        } else {
+            quizView.myCollectionView.isHidden = false
+            quizView.noQuizLabel.isHidden = true
+        }
+        
         print("the favorite quizes are: ")
         print(favoriteQuizzes)
         print("there are \(favoriteQuizzes.count) favorite quizes")

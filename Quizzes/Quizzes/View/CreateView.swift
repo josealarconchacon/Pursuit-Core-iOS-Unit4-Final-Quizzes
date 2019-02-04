@@ -20,14 +20,14 @@ class CreateView: UIView {
     lazy var mySecondTextView: UITextView = {
         let textViewTwo = UITextView()
         textViewTwo.backgroundColor = UIColor(hue: 0.2, saturation: 0.02, brightness: 0.9, alpha: 1.0)
-        textViewTwo.text = "enter first quiz fact"
+        textViewTwo.text = "enter quiz fact"
         textViewTwo.textColor = UIColor.lightGray
         return textViewTwo
     }()
     lazy var myLastTextView: UITextView = {
         var lastTextView = UITextView()
         lastTextView.backgroundColor = UIColor(hue: 0.2, saturation: 0.02, brightness: 0.9, alpha: 1.0)
-        lastTextView.text = "enter second quiz fact"
+        lastTextView.text = "enter quiz fact"
         lastTextView.textColor = UIColor.lightGray
         return lastTextView
     }()

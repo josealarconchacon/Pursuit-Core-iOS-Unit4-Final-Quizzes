@@ -20,6 +20,16 @@ class QuizView: UIView {
         collectionView.backgroundColor = UIColor(hue: 0.2, saturation: 0.02, brightness: 0.9, alpha: 1.0)
         return collectionView
     }()
+    
+    lazy var noQuizLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.textColor = .black
+        label.textAlignment = .center
+        label.numberOfLines = 10
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
@@ -34,6 +44,7 @@ class QuizView: UIView {
     }
     private func setUpQuizConstraints(){
         addSubview(myCollectionView)
+        addSubview(noQuizLabel)
         setCollectionViewConstraints()
     }
     func setCollectionViewConstraints() {
@@ -42,5 +53,13 @@ class QuizView: UIView {
         myCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 1).isActive = true
         myCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -1).isActive = true
         myCollectionView.heightAnchor.constraint(equalTo: heightAnchor, constant: 20).isActive = true
+        
+        noQuizLabel.translatesAutoresizingMaskIntoConstraints = false
+        noQuizLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 250).isActive = true
+        noQuizLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        noQuizLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60).isActive = true
+        noQuizLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60).isActive = true
+        noQuizLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        noQuizLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }
