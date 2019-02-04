@@ -26,7 +26,7 @@ class QuizView: UIView {
         label.textColor = .white
         label.textColor = .black
         label.textAlignment = .center
-        label.numberOfLines = 10
+        label.numberOfLines = 20
         return label
     }()
     
@@ -59,7 +59,7 @@ class QuizView: UIView {
         noQuizLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
         noQuizLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 60).isActive = true
         noQuizLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60).isActive = true
-        noQuizLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        noQuizLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
         noQuizLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 }

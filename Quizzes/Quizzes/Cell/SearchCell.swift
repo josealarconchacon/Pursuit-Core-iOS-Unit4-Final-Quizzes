@@ -24,7 +24,6 @@ class SearchCell: UICollectionViewCell {
         label.text = "Label"
         label.numberOfLines = 3
         label.textColor = .black
-//        label.font = UIFont(name: "Futura", size: 20)
         label.textAlignment = .center
         return label
     }()

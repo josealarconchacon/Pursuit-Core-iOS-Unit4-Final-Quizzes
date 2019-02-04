@@ -16,7 +16,7 @@ final class DataPersistenceQuizzes {
     private init() {}
 
     
-static func quizToSave(name: String) {
+static func quizToSave(filename: String) {
     let path = DataPersistenceManager.filepathToDocumentsDiretory(filename: filename)
         do {
             let data = try PropertyListEncoder().encode(quizzes)
@@ -25,7 +25,7 @@ static func quizToSave(name: String) {
             print("Property list encoding error: \(error)")
         }
     }
-static func getQuiz() -> [QuizModel] {
+    static func getQuiz(filename: String) -> [QuizModel] {
     var quiz = [QuizModel]()
         let path = DataPersistenceManager.filepathToDocumentsDiretory(filename: filename).path
         if FileManager.default.fileExists(atPath: path) {
@@ -44,13 +44,11 @@ static func getQuiz() -> [QuizModel] {
     return quiz
 }
     static func delete(index: Int) {
-        quizzes.remove(at: 0)
-        getQuiz()
+        quizzes.remove(at: index)
     }
-    static func save(newQuiztoSave: QuizModel) {
-//        quizToAdd.append(getQuiz)
+    static func save(newQuiztoSave: QuizModel, filename: String) {
         quizzes.append(newQuiztoSave)
-        quizToSave(name: filename)
+        quizToSave(filename: filename)
     }
 }
 

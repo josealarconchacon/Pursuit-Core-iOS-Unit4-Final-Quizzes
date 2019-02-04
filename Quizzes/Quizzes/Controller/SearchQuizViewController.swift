@@ -20,6 +20,7 @@ class SearchQuizViewController: UIViewController {
             self.searchView.myCollectionView.reloadData()
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -42,12 +43,12 @@ class SearchQuizViewController: UIViewController {
         }
     }
     @objc func addToQuiz(sender: UIButton) {
-        var alertController = UIAlertController(title: nil, message: "The quiz is already in the list", preferredStyle: .alert)
+        let alertController = UIAlertController(title: nil, message: "The quiz is already in the list", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
             
             if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
             let index = sender.tag ; let quizToSave = self.quizData[index]
-            let saveQuiz = DataPersistenceQuizzes.getQuiz()
+                let saveQuiz = DataPersistenceQuizzes.getQuiz(filename: name )
             for item in saveQuiz {
                 self.allQuiz.append(item.id)
                 }
@@ -55,12 +56,12 @@ class SearchQuizViewController: UIViewController {
         }
         alertController.addAction(action)
         if favoriteQuizzes.contains(quizData[sender.tag]) != true {
-            alertController.message = "The quiz was added"
+            alertController.message = "The quiz was added to your favorite"
             favoriteQuizzes.append(quizData[sender.tag])
         }
-        
         print(favoriteQuizzes)
         present(alertController,animated: true,completion: nil)
+        tabBarController?.selectedIndex = 0
     }
 }
 

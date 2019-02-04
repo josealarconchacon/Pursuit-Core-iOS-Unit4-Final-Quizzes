@@ -13,12 +13,9 @@ class QuizCell: UICollectionViewCell {
     lazy var quizButtonCell: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "icons8-button2"), for: .normal)
-        button.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
         button.setTitleColor(.black, for: .normal)
         return button
     }()
-    @objc func buttonPress() {
-    }
     lazy var myLabel: UILabel = {
         var label = UILabel()
         label.textColor = .black

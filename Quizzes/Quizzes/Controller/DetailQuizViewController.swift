@@ -57,21 +57,21 @@ extension DetailQuizViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = detailQuiz.detailCView.cellForItem(at: indexPath) as? DetailQuizCollectionViewCell else {return }
-        if cell.myLabel.text == titleInfo {
-        UIView.transition(with: cell, duration: 1.0, options: .transitionFlipFromLeft, animations: {
-            cell.myLabel.text = self.facts[indexPath.row]
-            })
-        } else {
-        UIView.transition(with: cell, duration: 1.0, options: .transitionFlipFromRight, animations: {
-            cell.myLabel.text = self.titleInfo
-        })
+            if cell.myLabel.text == titleInfo {
+                UIView.transition(with: cell, duration: 1.0, options: .transitionFlipFromLeft, animations: {
+                    cell.myLabel.text = self.facts[indexPath.row]
+                })
+            } else {
+                UIView.transition(with: cell, duration: 1.0, options: .transitionFlipFromRight, animations: {
+                    cell.myLabel.text = self.titleInfo
+                })
+        }
     }
-}
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailCell", for: indexPath) as? DetailQuizCollectionViewCell else {
             return UICollectionViewCell()}
-        let setUpQuiz = facts[indexPath.row]
-        cell.myLabel.text = self.titleInfo
-        return cell
+            let setUpQuiz = facts[indexPath.row]
+            cell.myLabel.text = self.titleInfo
+            return cell
     }
 }

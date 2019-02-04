@@ -39,21 +39,21 @@ class ProfileCreationViewController: UIViewController {
         let alert = UIAlertController(title: "Enter username", message: "No spaces allowed or special characters", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in })
         let submit = UIAlertAction(title: "Submit", style: .destructive, handler: { (action) -> Void in
-            DataPersistenceQuizzes.quizToSave(name: UserDefaultKeys.defaultSearchKey)
+            DataPersistenceQuizzes.quizToSave(filename: UserDefaultKeys.defaultSearchKey)
             let textField = alert.textFields![0]
             if textField.text != "" {
                 loggedIn = true
             }
             self.profileView.myLabel.text = textField.text!
-            let alert = UIAlertController(title: nil, message: "Thank you  \(textField.text!)", preferredStyle: .alert)
+            let alert = UIAlertController(title: nil, message: " Welcome \(textField.text!)", preferredStyle: .alert)
             let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-
+                UserDefaults.standard.set(UserDefaultKeys.defaultSearchKey, forKey: "name")
             })
             alert.addAction(ok)
             self.present(alert,animated: true,completion: nil)
         })
         alert.addTextField(configurationHandler: {(textField: UITextField) in
-            textField.placeholder = "Enter user name"
+            textField.placeholder = "enter user name"
             textField.keyboardType = .default
             textField.textAlignment = .center
         })
@@ -74,7 +74,6 @@ class ProfileCreationViewController: UIViewController {
         self.present(imagePickerController, animated:  true, completion:  nil)
         print("tapped")
     }
-
 }
 
 extension ProfileCreationViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -86,7 +85,7 @@ extension ProfileCreationViewController: UIImagePickerControllerDelegate, UINavi
          profileView.userImage.image = image
         let imageToSave = image.jpegData(compressionQuality: 0.5)
             if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
-            UserDefaults.standard.set(imageToSave, forKey: "name" + name)
+            UserDefaults.standard.set(imageToSave, forKey: "name" )
             }
             picker.dismiss(animated: true, completion: nil)
         }

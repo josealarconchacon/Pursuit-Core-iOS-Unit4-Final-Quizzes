@@ -33,6 +33,7 @@ class CreateViewController: UIViewController {
             self.navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }
+    
     func createQuizLoginAlert() {
         let alert = UIAlertController(title: nil, message: "You need to be logged in to create a quiz", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
@@ -58,23 +59,20 @@ class CreateViewController: UIViewController {
             print("Please include a Quiz name and two facts")
             return
         }
-        
         let newQuizName = createView.myFirstTextField.text
         let newQuizFactOne = createView.mySecondTextView.text
         let newQuizFactTwo = createView.myLastTextView.text
         let newQuizId = String(favoriteQuizzes.count + 1)
-        
         let newQuiz = QuizModel.init(id: newQuizId, quizTitle: newQuizName!, facts: [newQuizFactOne!, newQuizFactTwo!])
-        
         favoriteQuizzes.append(newQuiz)
         
-           let alert = UIAlertController(title: "Quiz Saved", message: nil, preferredStyle: .alert)
-            let ok = UIAlertAction(title: "Ok", style: .default) { (UIAlertAction) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            alert.addAction(ok)
-            self.present(alert, animated: true, completion: nil)
-        
+        let alert = UIAlertController(title: "Quiz Saved", message: nil, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "Ok", style: .default) { (UIAlertAction) in
+        self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
+        tabBarController?.selectedIndex = 0
     }
 }
 extension CreateViewController: UITextViewDelegate, UITextFieldDelegate {
@@ -84,7 +82,6 @@ extension CreateViewController: UITextViewDelegate, UITextFieldDelegate {
         }
         return true
     }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
