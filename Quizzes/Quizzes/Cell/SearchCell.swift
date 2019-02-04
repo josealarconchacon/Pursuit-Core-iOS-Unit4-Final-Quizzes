@@ -12,7 +12,7 @@ class SearchCell: UICollectionViewCell {
     
     lazy var myButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "add-icon-filled"), for: .normal)
+        button.setImage(UIImage(named: "icons8-plus_math_filled"), for: .normal)
         button.addTarget(self, action: #selector(buttonPress), for: .touchUpInside)
         button.setTitleColor(.black, for: .normal)
         return button

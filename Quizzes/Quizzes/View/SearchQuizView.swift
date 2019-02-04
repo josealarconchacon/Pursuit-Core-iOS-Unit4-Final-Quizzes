@@ -16,7 +16,7 @@ class SearchQuizView: UIView {
         layout.itemSize = CGSize.init(width: 400, height: 400)
         layout.sectionInset = UIEdgeInsets.init(top: 20, left: 10, bottom: 20, right: 10)
         let collectionView = UICollectionView.init(frame: self.bounds, collectionViewLayout: layout)
-        collectionView.backgroundColor = .gray
+        collectionView.backgroundColor = UIColor(hue: 14/360, saturation: 2/100, brightness: 55/100, alpha: 1.0) 
         return collectionView
     }()
 

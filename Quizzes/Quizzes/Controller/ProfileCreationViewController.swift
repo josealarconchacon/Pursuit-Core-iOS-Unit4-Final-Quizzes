@@ -21,23 +21,15 @@ class ProfileCreationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        self.view.backgroundColor = UIColor(hue: 0.1861, saturation: 0, brightness: 0.97, alpha: 1.0)
         navigationItem.title = "Profile"
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         view.addSubview(profileView)
         tapGesture.addTarget(self, action: #selector(imageTapped))
         profileView.userImage.addGestureRecognizer(tapGesture)
         profileView.userImage.isUserInteractionEnabled = true
-        
-        profileView.userImage.layer.borderWidth = 1
-        profileView.userImage.layer.masksToBounds = false
-        profileView.userImage.layer.borderColor = UIColor.black.cgColor
-        profileView.userImage.layer.cornerRadius = profileView.userImage.frame.height/2
-        profileView.clipsToBounds = true
-        
-//        profileAlert()
-        
         }
+    
     override func viewDidAppear(_ animated: Bool) {
         if loggedIn == false {
             profileAlert()
@@ -47,22 +39,28 @@ class ProfileCreationViewController: UIViewController {
         let alert = UIAlertController(title: "Enter username", message: "No spaces allowed or special characters", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in })
         let submit = UIAlertAction(title: "Submit", style: .destructive, handler: { (action) -> Void in
+            DataPersistenceQuizzes.quizToSave(name: UserDefaultKeys.defaultSearchKey)
             let textField = alert.textFields![0]
-            print(textField.text)
             if textField.text != "" {
                 loggedIn = true
             }
             self.profileView.myLabel.text = textField.text!
+            let alert = UIAlertController(title: nil, message: "Thank you  \(textField.text!)", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
+
+            })
+            alert.addAction(ok)
+            self.present(alert,animated: true,completion: nil)
         })
         alert.addTextField(configurationHandler: {(textField: UITextField) in
             textField.placeholder = "Enter user name"
             textField.keyboardType = .default
+            textField.textAlignment = .center
         })
         alert.addAction(cancel)
         alert.addAction(submit)
         present(alert, animated:  true, completion:  nil)
     }
-   
     @objc func imageTapped() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -76,6 +74,7 @@ class ProfileCreationViewController: UIViewController {
         self.present(imagePickerController, animated:  true, completion:  nil)
         print("tapped")
     }
+
 }
 
 extension ProfileCreationViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

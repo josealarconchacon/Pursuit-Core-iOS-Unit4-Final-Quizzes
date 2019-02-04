@@ -14,8 +14,6 @@ struct QuizModel: Codable {
     let quizTitle: String
     let facts: [String]
 }
-
-
 struct AddQuiz: Codable {
     let id: String
     let quizTitle: String

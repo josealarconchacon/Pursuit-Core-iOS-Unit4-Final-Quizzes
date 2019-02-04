@@ -23,7 +23,6 @@ class QuizCell: UICollectionViewCell {
         var label = UILabel()
         label.textColor = .black
         label.numberOfLines = 3
-//        label.font = UIFont(name: "Futura", size: 20)
         label.textAlignment = .center
         label.text = "Hello"
         return label

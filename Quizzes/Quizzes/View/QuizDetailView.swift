@@ -18,7 +18,7 @@ class QuizDetailView: UIView {
         layout.sectionInset = UIEdgeInsets.init(top: 20, left: 10, bottom: 20, right: 10)
         layout.scrollDirection = .vertical
         var collectionView = UICollectionView.init(frame: self.bounds, collectionViewLayout: layout)
-        collectionView.backgroundColor = .red
+        collectionView.backgroundColor = UIColor(hue: 54/360, saturation: 4/100, brightness: 84/100, alpha: 1.0) 
         return collectionView
     }()
     override init(frame: CGRect) {

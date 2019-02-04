@@ -8,6 +8,7 @@
 
 import UIKit
 var newCreate = [AddQuiz]()
+var loggInUser = false
 
 class CreateViewController: UIViewController {
     let createView = CreateView()
@@ -18,31 +19,50 @@ class CreateViewController: UIViewController {
         view.addSubview(createView)
         createView.myFirstTextField.delegate = self
         createView.mySecondTextView.delegate = self
-        createView.myLastTexView.delegate = self
+        createView.myLastTextView.delegate = self
         let leftButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: self, action: #selector(cancel))
         let rightButton = UIBarButtonItem(title: "Create", style: UIBarButtonItem.Style.plain, target: self, action: #selector(create))
         self.navigationItem.leftBarButtonItem = leftButton
         self.navigationItem.rightBarButtonItem = rightButton
-        alert()
     }
-    @objc func cancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func create(_ sender: UIBarButtonItem) {
-        if createView.myFirstTextField.text == nil {
-            if createView.mySecondTextView.text == nil {
-                if createView.myLastTexView.text == nil {
-                }
-            }
+    override func viewDidAppear(_ animated: Bool) {
+        if loggedIn == false {
+            createQuizLoginAlert()
         }
-        let factsDetail = [createView.myLastTexView, createView.mySecondTextView, createView.myLastTexView]
-        let timeStamp = Date.getISOTimestamp()
-        createView.myFirstTextField = createView.myFirstTextField
-        createView.mySecondTextView = createView.mySecondTextView
-        createView.myLastTexView = createView.myLastTexView
+    }
+    func createQuizLoginAlert() {
+        let alert = UIAlertController(title: nil, message: "You need to Logged In", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+        }
+        alert.addAction(ok)
+        self.present(alert,animated: true,completion: nil)
+    }
+   
+    @objc func cancel(_ sender: UIBarButtonItem) {
+        tabBarController?.selectedIndex = 0
+        print("cancel button \(cancel)")
+    }
+    @objc func create(_ sender: UIBarButtonItem) {
+        if (createView.myFirstTextField.text == nil) || (createView.mySecondTextView.text == nil) || (createView.myLastTextView.text == nil) {
+            print("Please include a Quiz name and two facts")
+            return
+        }
+//        let factsDetail = [createView.myLastTextView, createView.mySecondTextView, createView.myLastTextView]
+//        let timeStamp = Date.getISOTimestamp()
+        
+        let newQuizName = createView.myFirstTextField.text
+        let newQuizFactOne = createView.mySecondTextView.text
+        let newQuizFactTwo = createView.myLastTextView.text
+        
+        let newQuiz = QuizModel.init(id: "some ID", quizTitle: newQuizName!, facts: [newQuizFactOne!, newQuizFactTwo!])
+        
+        favoriteQuizzes.append(newQuiz)
+//        createView.myFirstTextField = createView.myFirstTextField.text
+//        createView.mySecondTextView = createView.mySecondTextView
+//        createView.myLastTextView = createView.myLastTextView
         UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String;  do {
-           let alert = UIAlertController(title: "Quiz Saved", message: "", preferredStyle: .alert)
+           let alert = UIAlertController(title: "Quiz Saved", message: nil, preferredStyle: .alert)
             let ok = UIAlertAction(title: "Ok", style: .default) { (UIAlertAction) in
                 self.dismiss(animated: true, completion: nil)
             }
@@ -50,14 +70,7 @@ class CreateViewController: UIViewController {
             present(alert, animated: true, completion: nil)
         }
     }
-    func alert() {
-        let alert = UIAlertController(title: "Logged In", message: "Please login to create quizzes", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "Ok", style: .default) { (UIAlertAction) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil)
-    }
+    
 }
 extension CreateViewController: UITextViewDelegate, UITextFieldDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

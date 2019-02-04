@@ -44,9 +44,10 @@ class SearchQuizViewController: UIViewController {
     @objc func addToQuiz(sender: UIButton) {
         let alertController = UIAlertController(title: nil, message: "Was add it to the Quiz", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
+            
             if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
             let index = sender.tag ; let quizToSave = self.quizData[index]
-                let saveQuiz = DataPersistenceQuizzes.getQuiz(name: name)
+            let saveQuiz = DataPersistenceQuizzes.getQuiz()
             for item in saveQuiz {
                 self.allQuiz.append(item.id)
                 }

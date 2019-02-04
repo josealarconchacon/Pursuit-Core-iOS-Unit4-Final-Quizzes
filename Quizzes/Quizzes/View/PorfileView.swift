@@ -12,20 +12,25 @@ class PorfileView: UIView {
 
     lazy var showView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         return view
     }()
+
     lazy var userImage: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = .black
+        let image = UIImageView(image: UIImage(named: "placeholder-image"))
+        image.layer.cornerRadius = image.frame.size.width/2
+        image.layer.borderWidth = 1
+        image.layer.borderColor = UIColor.black.cgColor
+        image.clipsToBounds = true
+        image.layer.masksToBounds = false
+        image.clipsToBounds = true
         return image
     }()
     lazy var myLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.text = "Text is in here"
+        label.textColor = .black
         label.textAlignment = .center
-        label.backgroundColor = .black
         return label
     }()
     override init(frame: CGRect) {

@@ -9,7 +9,7 @@
 import UIKit
 
 class QuizViewController: UIViewController {
-    
+    var favoriteQuiz = DataPersistenceQuizzes.getQuiz()
     let quizView = QuizView()
     let quizCell = QuizCell()
     
@@ -36,14 +36,14 @@ class QuizViewController: UIViewController {
         print(favoriteQuizzes)
         print("there are \(favoriteQuizzes.count) favorite quizes")
         quizView.myCollectionView.reloadData()
+        reload()
     }
     
     @objc func buttonPress(sender: UIButton) {
-//        if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
             let index = sender.tag
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let delete = UIAlertAction(title: "Delete", style: .destructive) { (UIAlertAction) in
-               DataPersistenceQuizzes.delet(index: index)
+                DataPersistenceQuizzes.delete(index: index)
                 self.quizView.myCollectionView.reloadData()
             }
              let cancel = UIAlertAction(title: "Cancel", style: .cancel)
@@ -51,7 +51,14 @@ class QuizViewController: UIViewController {
             alert.addAction(cancel)
             present(alert, animated: true)
         }
-   // }
+    func delete() {
+        favoriteQuiz = DataPersistenceQuizzes.getQuiz()
+        quizView.myCollectionView.reloadData()
+    }
+    func reload() {
+        favoriteQuiz = DataPersistenceQuizzes.getQuiz()
+        quizView.myCollectionView.reloadData()
+    }
 }
 
 extension QuizViewController: UICollectionViewDataSource, UICollectionViewDelegate {

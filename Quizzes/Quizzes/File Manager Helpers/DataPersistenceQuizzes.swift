@@ -9,6 +9,7 @@
 import Foundation
 
 final class DataPersistenceQuizzes {
+   
     private static let name = "Quizzes.plist"
     private static var quiz = [QuizModel]()
     private static var quizToAdd = [AddQuiz]()
@@ -24,14 +25,13 @@ static func quizToSave(name: String) {
             print("Property list encoding error: \(error)")
         }
     }
-static func getQuiz(name: String) -> [QuizModel] {
+static func getQuiz() -> [QuizModel] {
     var quiz = [QuizModel]()
         let path = DataPersistenceManager.filepathToDocumentsDiretory(filename: name).path
         if FileManager.default.fileExists(atPath: path) {
             if let data = FileManager.default.contents(atPath: path) {
                 do {
                     quiz = try PropertyListDecoder().decode([QuizModel].self, from: data)
-                    //quizzes = quizzes.sorted{$0.date < $1.date}
                 } catch {
                     print("property list decoding error: \(error)")
                 }
@@ -43,11 +43,13 @@ static func getQuiz(name: String) -> [QuizModel] {
     }
     return quiz
 }
-static func delet(index: Int) {
-    quizToAdd.remove(at: index)
+    static func delete(index: Int) {
+        quiz.remove(at: index)
+        getQuiz()
     }
-    static func save(name: String, getQuiz: AddQuiz) {
+    static func save(getQuiz: AddQuiz) {
         quizToAdd.append(getQuiz)
+        quizToSave(name: name)
     }
 }
 
