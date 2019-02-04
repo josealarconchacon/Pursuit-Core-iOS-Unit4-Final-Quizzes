@@ -17,7 +17,9 @@ class SearchQuizViewController: UIViewController {
     
     var quizData = [QuizModel]() {
         didSet {
-            self.searchView.myCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.searchView.myCollectionView.reloadData()
+            }
         }
     }
     
@@ -38,7 +40,10 @@ class SearchQuizViewController: UIViewController {
                 print(self.quizData)
                 print("the number of quizes is \(self.quizData.count)")
                 self.quizData = self.quizData.sorted{$0.quizTitle < $1.quizTitle }
-                self.searchView.myCollectionView.reloadData()
+                DispatchQueue.main.async {
+                    self.searchView.myCollectionView.reloadData()
+
+                }
             }
         }
     }

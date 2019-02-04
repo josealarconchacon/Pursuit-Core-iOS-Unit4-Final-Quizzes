@@ -44,7 +44,7 @@ static func quizToSave(filename: String) {
     return quiz
 }
     static func delete(index: Int) {
-        quizzes.remove(at: index)
+        let removed = favoriteQuizzes.remove(at: index)
     }
     static func save(newQuiztoSave: QuizModel, filename: String) {
         quizzes.append(newQuiztoSave)
