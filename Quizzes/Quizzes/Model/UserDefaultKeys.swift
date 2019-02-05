@@ -14,7 +14,7 @@ struct UserDefaultKeys {
     static var defaultKey = "image"
     static func getUserImage() -> UIImage {
         var getImage = UIImage()
-            if let name  = UserDefaults.standard.string(forKey: UserDefaultKeys.defaultSearchKey) as? String {
+            if let name  = UserDefaults.standard.string(forKey: "name") as? String {
                 if let image = UserDefaults.standard.string(forKey: UserDefaultKeys.defaultKey) as? Data {
                     let userImage = UIImage(data: image)
                         getImage = userImage!

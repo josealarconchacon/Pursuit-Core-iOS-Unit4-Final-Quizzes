@@ -26,11 +26,13 @@ class CreateViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = rightButton
     }
     override func viewDidAppear(_ animated: Bool) {
-        if loggedIn == false {
+        if LogingHelper.loginState == .notLogged {
             createQuizLoginAlert()
         }
-        if loggedIn == true {
+        if LogingHelper.loginState == .login {
             self.navigationItem.rightBarButtonItem?.isEnabled = true
+        } else {
+            createQuizLoginAlert()
         }
     }
     
@@ -49,7 +51,7 @@ class CreateViewController: UIViewController {
             textView.font = UIFont(name: "verdana", size: 18.0)
         }
     }
-
+    
     @objc func cancel(_ sender: UIBarButtonItem) {
         tabBarController?.selectedIndex = 0
         print("cancel button \(cancel)")

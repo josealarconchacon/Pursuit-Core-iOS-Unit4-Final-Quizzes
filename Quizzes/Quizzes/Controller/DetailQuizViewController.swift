@@ -15,9 +15,9 @@ class DetailQuizViewController: UIViewController {
     
     var quizzes = [QuizModel]() {
         didSet {
-            DispatchQueue.main.async {
+//            DispatchQueue.main.async {
                 self.detailQuiz.detailCView.reloadData()
-            }
+//            }
         }
     }
     override func viewWillAppear(_ animated: Bool) {

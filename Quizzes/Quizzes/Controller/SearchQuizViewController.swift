@@ -51,14 +51,14 @@ class SearchQuizViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: "The quiz is already in the list", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (UIAlertAction) in
             
-            if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
-            let index = sender.tag ; let quizToSave = self.quizData[index]
-                let saveQuiz = DataPersistenceQuizzes.getQuiz(filename: name )
-            for item in saveQuiz {
-                self.allQuiz.append(item.id)
-                }
+            let index = sender.tag
+                let quizToSave = self.quizData[index]
+                if let userName = UserDefaults.standard.object(forKey: "name") as? String{
+                DataPersistenceQuizzes.save(newQuiztoSave: quizToSave, filename: userName)
+                
             }
         }
+        
         alertController.addAction(action)
         if favoriteQuizzes.contains(quizData[sender.tag]) != true {
             alertController.message = "The quiz was added to your favorite"

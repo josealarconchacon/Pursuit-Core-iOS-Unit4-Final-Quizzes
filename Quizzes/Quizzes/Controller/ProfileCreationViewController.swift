@@ -28,34 +28,46 @@ class ProfileCreationViewController: UIViewController {
         tapGesture.addTarget(self, action: #selector(imageTapped))
         profileView.userImage.addGestureRecognizer(tapGesture)
         profileView.userImage.isUserInteractionEnabled = true
+        if let userName = UserDefaults.standard.object(forKey: "name") as? String {
+                profileView.myLabel.text = userName
+        } else if  loggedIn == false{
+            profileAlert()
         }
+    }
     
     override func viewDidAppear(_ animated: Bool) {
-        if loggedIn == false {
+        if let userName = UserDefaults.standard.object(forKey: "name") as? String {
+            profileView.myLabel.text = userName
+        } else {
             profileAlert()
         }
     }
     func profileAlert() {
+        
         let alert = UIAlertController(title: "Enter username", message: "No spaces allowed or special characters", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in })
-        let submit = UIAlertAction(title: "Submit", style: .destructive, handler: { (action) -> Void in
+        alert.addTextField(configurationHandler: {(textField: UITextField) in
+            textField.placeholder = "enter user name"
+            textField.keyboardType = .default
+            textField.textAlignment = .center
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
+        let submit = UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
             DataPersistenceQuizzes.quizToSave(filename: UserDefaultKeys.defaultSearchKey)
             let textField = alert.textFields![0]
+            if let text = alert.textFields?.first?.text{
+                UserDefaults.standard.set(text, forKey: "name")
+            }
+            LogingHelper.loginState = .login
             if textField.text != "" {
                 loggedIn = true
             }
             self.profileView.myLabel.text = textField.text!
             let alert = UIAlertController(title: nil, message: " Welcome \(textField.text!)", preferredStyle: .alert)
             let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-                UserDefaults.standard.set(UserDefaultKeys.defaultSearchKey, forKey: "name")
+
             })
             alert.addAction(ok)
             self.present(alert,animated: true,completion: nil)
-        })
-        alert.addTextField(configurationHandler: {(textField: UITextField) in
-            textField.placeholder = "enter user name"
-            textField.keyboardType = .default
-            textField.textAlignment = .center
         })
         alert.addAction(cancel)
         alert.addAction(submit)

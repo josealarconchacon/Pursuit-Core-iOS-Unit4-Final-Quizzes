@@ -11,7 +11,13 @@ import UIKit
 class QuizViewController: UIViewController {
     var quizView = QuizView()
     let quizCell = QuizCell()
-    
+    var saveQuiz = [QuizModel]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.quizView.myCollectionView.reloadData()
+            }
+        }
+    }
     var addQuiz = [QuizModel]() {
         didSet {
             DispatchQueue.main.async {
@@ -26,9 +32,15 @@ class QuizViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(quizView)
         tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
+        if let userName = UserDefaults.standard.object(forKey: "name") as? String{
+            addQuiz = DataPersistenceQuizzes.getQuiz(filename: userName)
+            LogingHelper.loginState = .login
+        }
         quizView.myCollectionView.dataSource = self
         quizView.myCollectionView.delegate = self
         quizView.myCollectionView.register(QuizCell.self, forCellWithReuseIdentifier: "QuizCell")
+        saveQuiz = DataPersistenceQuizzes.getQuiz(filename: UserDefaultKeys.defaultSearchKey)
+        
         
         if favoriteQuizzes.count == 0 {
             quizView.noQuizLabel.isHidden = false
@@ -40,6 +52,9 @@ class QuizViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        if let userName = UserDefaults.standard.object(forKey: "name") as? String{
+            addQuiz = DataPersistenceQuizzes.getQuiz(filename: userName)
+        }
         if favoriteQuizzes.count == 0 {
             quizView.noQuizLabel.isHidden = false
             quizView.myCollectionView.isHidden = true
