@@ -169,8 +169,8 @@
 			isa = PBXGroup;
 			children = (
 				670A66F22204F49700E04A51 /* QuizCell.swift */,
-				670A66FF22064E3700E04A51 /* SearchCell.swift */,
 				670A67052206C35700E04A51 /* DetailQuizCollectionViewCell.swift */,
+				670A66FF22064E3700E04A51 /* SearchCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";

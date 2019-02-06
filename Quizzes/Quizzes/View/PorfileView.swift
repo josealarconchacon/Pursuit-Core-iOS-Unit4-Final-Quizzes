@@ -33,6 +33,7 @@ class PorfileView: UIView {
         label.textAlignment = .center
         return label
     }()
+   
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
@@ -81,5 +82,7 @@ class PorfileView: UIView {
         myLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -60).isActive = true
         myLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         myLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+       
     }
 }

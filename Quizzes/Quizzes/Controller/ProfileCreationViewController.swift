@@ -12,8 +12,9 @@ var loggedIn = false
 
 class ProfileCreationViewController: UIViewController {
     var mainController: ProfileCreationViewController!
-   
+    
     var userName = String()
+    var userImage = UIImage()
     var profileView = PorfileView()
     var selectedProfileimage = UIImage()
     private var imagePickerController: UIImagePickerController!
@@ -29,21 +30,37 @@ class ProfileCreationViewController: UIViewController {
         profileView.userImage.addGestureRecognizer(tapGesture)
         profileView.userImage.isUserInteractionEnabled = true
         if let userName = UserDefaults.standard.object(forKey: "name") as? String {
-                profileView.myLabel.text = userName
+            if let imageData = UserDefaults.standard.object(forKey: userName) as? Data {
+                if let image = UIImage(data: imageData) {
+                    self.profileView.userImage.image = image
+                }
+            }
+        }
+        
+        if let userName = UserDefaults.standard.object(forKey: "name") as? String {
+            profileView.myLabel.text = userName
         } else if  loggedIn == false{
             profileAlert()
         }
     }
-    
+   
     override func viewDidAppear(_ animated: Bool) {
         if let userName = UserDefaults.standard.object(forKey: "name") as? String {
             profileView.myLabel.text = userName
         } else {
             profileAlert()
         }
+        if let userName = UserDefaults.standard.object(forKey: "name") as? String {
+            if let imageData = UserDefaults.standard.object(forKey: userName) as? Data {
+                if let image = UIImage(data: imageData) {
+                    self.profileView.userImage.image = image
+                }
+            }
+        }
     }
+    
+    
     func profileAlert() {
-        
         let alert = UIAlertController(title: "Enter username", message: "No spaces allowed or special characters", preferredStyle: .alert)
         alert.addTextField(configurationHandler: {(textField: UITextField) in
             textField.placeholder = "enter user name"
@@ -53,6 +70,7 @@ class ProfileCreationViewController: UIViewController {
         let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { (action) -> Void in })
         let submit = UIAlertAction(title: "Submit", style: .default, handler: { (action) -> Void in
             DataPersistenceQuizzes.quizToSave(filename: UserDefaultKeys.defaultSearchKey)
+            DataPersistenceQuizzes.quizToSave(filename: UserDefaultKeys.defaultKey)
             let textField = alert.textFields![0]
             if let text = alert.textFields?.first?.text{
                 UserDefaults.standard.set(text, forKey: "name")
@@ -79,6 +97,7 @@ class ProfileCreationViewController: UIViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { (action) -> Void in })
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
+
         imagePickerController.sourceType = .photoLibrary
         }))
         actionSheet.addAction(cancel)
@@ -96,9 +115,9 @@ extension ProfileCreationViewController: UIImagePickerControllerDelegate, UINavi
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
          profileView.userImage.image = image
         let imageToSave = image.jpegData(compressionQuality: 0.5)
-            if let name = UserDefaults.standard.object(forKey: UserDefaultKeys.defaultSearchKey) as? String {
-            UserDefaults.standard.set(imageToSave, forKey: "name" )
-            }
+            if let name = UserDefaults.standard.object(forKey: "name") as? String {
+                     UserDefaults.standard.set(imageToSave, forKey: name)
+                }
             picker.dismiss(animated: true, completion: nil)
         }
     }
